@@ -1,6 +1,6 @@
 # SUSS 
 
-The python package that powers interactive study guide. Work closely with kaggle's learntools.
+The python package that powers interactive study [labguide](https://github.com/suss-vli/labguide). Work closely with kaggle's [learntools](https://github.com/suss-vli/learntools).
 
 
 ## Get started
@@ -14,7 +14,7 @@ python3 -m pip install --upgrade build
 python3 -m build
 ```
 
-## if you are developing iLabGuide
+## if you are developing labguide
 
 you can just run the following command to upgrade this package
 
@@ -53,7 +53,7 @@ from suss.ict133.lab1 import *
 
  For ICT133 and ICT162, you will see a difference where we use the `FunctionProblem` and directly access the student's written function for the answer. and the format for our code is slightly different where instead of writing our customised check in `check`, it is under `check_testbook`: https://github.com/suss-vli/suss/blob/main/src/suss/ict133/lab1_questions/q1.py#L28
 
-From ICT233 onwards, we begin using `get_source_code` : https://github.com/suss-vli/suss/blob/bb2e8593263e7321b283f77bdcc9cc299de24142/src/suss/ict233/lab1_questions/q1.py#L42
+From ICT233 onwards, we begin using `get_source_code` .
 
 and we write our checks within the `check` function. `get_source_code` allows us to get the exact codes written by students to check.
 With every `get_source_code`, a `test_for_none_xxx` must accompany it. This is to navigate the issue of difference in the cell number to `get_source_code` from due to missing cells, additional cells.
