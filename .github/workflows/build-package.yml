@@ -1,0 +1,34 @@
+name: build suss package workflow
+on: push
+jobs:
+  build-suss-package:
+    runs-on: ubuntu-22.04
+    if: "contains(github.event.head_commit.message, '-build')"
+    steps:
+      - name: check out code from repo
+        uses: actions/checkout@v3
+
+      - name: setup python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: install package dependencies
+        run: |
+          sudo add-apt-repository ppa:deadsnakes/ppa -y
+          sudo apt-get install python3.10-venv -y
+          curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+
+      - name: build package
+        run: |
+          python3.10 -m pip install --upgrade build
+          python3.10 -m build   
+       
+      - name: create release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          files: |
+            dist/suss-0.0.1.tar.gz
+          automatic_release_tag: "latest"
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false

@@ -1,0 +1,4 @@
+dist/*
+ict133/__pycache__/*
+x/__pycache__/*
+venv/*
