@@ -361,7 +361,7 @@ def filter_source(source, what_to_filter):
     filtered_lines = [
         line.split('#')[0].rstrip() if '#' in line else line 
         for line in lines 
-        if line.strip() and not line.lstrip().startswith(what_to_filter)
+        if line.strip() and not any(line.lstrip().startswith(f) for f in what_to_filter)
     ]
     updated_source = '\n'.join(filtered_lines)
     return updated_source
@@ -427,6 +427,7 @@ def test_for_none_588(desired_content, notebook_name, cell_idx, value, new_value
         # individual_cell_number = ""
         if var == "list":
             updated_source = update_list_in_code(desired_content, value, new_value)
+            print("updated_source", updated_source)
         elif var == "csv":
             updated_source = update_csv_in_code(desired_content, value, what_to_find)
         else:
