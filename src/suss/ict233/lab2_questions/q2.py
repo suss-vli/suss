@@ -43,7 +43,7 @@ class Question2(FunctionProblem):
             # testing chatgpt
 
             # Capture the print output
-            output_buffer = x.capture_print_output()
+            output_buffer = x._output()
 
             # Call the method that produces print statements
             fn().calculate_total(session, test[0], test[1], test[2], test[3])

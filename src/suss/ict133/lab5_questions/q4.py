@@ -2,136 +2,144 @@ from learntools.core import *
 from unittest.mock import patch
 from ...dev import x
 
-# TODO: check if external hints work with this 
+# Question4 - step by step multiple part functional problem
 class Question4A(EqualityCheckProblem):
-    _var = 'marks'
-    _hint="Use the `marks` stated in the question"
-    _expected = 0
-    _solution = CS("""
-marks = {'John':[0,0],'Jane':[0,0],'Peter':[0,0],'Joe':[0,0]}
-            """)
-    
-    def actual_value(self):
-        return self.injectable_vars
-        # varnames= self.injectable_vars
-        # for (var, val) in zip(varnames, args):
-    
-        # for actual in zip(self.injectable_vars):
-        #     return actual
+    _var = 'currs'
+    _expected = {'USD': 0.73, 'RMB': 5.01, 'HKD': 5.73}
     
 class Question4B(FunctionProblem): #question3b only checks for the menu printed out. `choice` is not checked
-    _var="question4b"
+    _var="menuOption"
     _test_cases = [
-        ("""Menu
-1. Add marks
-2. Update marks
-3. Remove student
-4. Display marks
-0. Exit\n""")]
+        (1, """Menu
+1. Add Currency
+2. Adjust Currency
+3. Remove Currency
+4. Display Currency rates
+0. Quit\n"""),
+        (2, """Menu
+1. Add Currency
+2. Adjust Currency
+3. Remove Currency
+4. Display Currency rates
+0. Quit\n"""),
+        (3, """Menu
+1. Add Currency
+2. Adjust Currency
+3. Remove Currency
+4. Display Currency rates
+0. Quit\n"""),
+        (4, """Menu
+1. Add Currency
+2. Adjust Currency
+3. Remove Currency
+4. Display Currency rates
+0. Quit\n"""),
+        (0, """Menu
+1. Add Currency
+2. Adjust Currency
+3. Remove Currency
+4. Display Currency rates
+0. Quit\n"""),
+        (5, """Menu
+1. Add Currency
+2. Adjust Currency
+3. Remove Currency
+4. Display Currency rates
+0. Quit\n""")]
     
     def test_cases(self):
         return self._test_cases
 
     def check_testbook(self, fn):
-        for a, expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-            with patch('builtins.input', return_value=a):
+        for test, expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+            with patch('builtins.input', return_value=test):
                 out, actual = x.compare_printout(fn)
-                # x.print_comparison(out,expected)
-                x.grading_with_string_comparison((a,expected, out))
-                
+                x.grading_with_string_comparison((test,expected, out))
+                x.determine_the_grading_method((test, test, actual))
+
     def check(self, fn):
         self.check_testbook(fn)       
 
 class Question4C(FunctionProblem):
-    _var="addMarks"
+    _var="addCurrency"
     _test_cases = [
-        ('Jane', 1, 1, 'Record exists\n'),
-        ('A', 0, 0, 'Added!\n')
-
-         ]
+        ('MYR',3, """Currency updated {'USD': 0.73, 'RMB': 5.01, 'HKD': 5.73, 'MYR': 3.0}\n"""),
+        ('hkd',4, """Currency already exists! {'USD': 0.73, 'RMB': 5.01, 'HKD': 5.73}\n""")
+    ]
         
     def test_cases(self):
         return self._test_cases
 
     def check_testbook(self, fn):
-        for a,b,c,expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-            with patch('builtins.input', side_effect=[a,b,c]):
-                marks = {'John':[0,0],'Jane':[0,0],'Peter':[0,0],'Joe':[0,0]}
-                out, actual = x.compare_printout_with_args(fn, marks)
+        for a,b,expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+            with patch('builtins.input', side_effect=[a,b]):
+                currs = {'USD': 0.73, 'RMB': 5.01, 'HKD': 5.73}
+                out, actual = x.compare_printout_with_args(fn, currs)
                 # x.print_comparison(out,expected)
-                x.grading_with_string_comparison(([a,b,c],expected, out))
-                # ENV=DEV. can be a file. 
+                x.grading_with_string_comparison(([a,b],expected, out))
                                                     
     def check(self, fn):
         self.check_testbook(fn)  
 
 class Question4D(FunctionProblem):
-    _var="updateMarks"
+    _var="adjustCurrency"
     _test_cases = [
-        ('Jane', 'C', '2', """Coursework: 0
-Exam: 0
-Updated!\n"""),
-        ('A', '', '', 'Record does not exist\n')]
-    
-    def test_cases(self):
-        return self._test_cases
+        ('sgd', '', 'Currency not found!\n'),
+        ('usd', '1', """Rate is 0.73
+USD adjusted to 1.0\n""")
 
-    def check_testbook(self, fn):
-        for a,b,c,expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-            with patch('builtins.input', side_effect=[a,b,c]):
-                marks = {'John':[0,0],'Jane':[0,0],'Peter':[0,0],'Joe':[0,0]}
-                out, actual = x.compare_printout_with_args(fn, marks)
-                x.grading_with_string_comparison(([a,b,c],expected, out))
-        
-    def check(self, fn):
-        self.check_testbook(fn)
-
-class Question4E(FunctionProblem):
-    _var="removeStudent"
-    _test_cases = [
-        ('Jane', 'Record removed: Jane\n'),
-        ('Alice', 'Record does not exist: Alice\n')
     ]
     
     def test_cases(self):
         return self._test_cases
 
     def check_testbook(self, fn):
-        for args, expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+        for a,b,expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+            with patch('builtins.input', side_effect=[a,b]):
+                currs = {'USD': 0.73, 'RMB': 5.01, 'HKD': 5.73}
+                out, actual = x.compare_printout_with_args(fn, currs)
+                x.grading_with_string_comparison(([a,b],expected, out))
+        
+    def check(self, fn):
+        self.check_testbook(fn)
+
+class Question4E(FunctionProblem):
+    _var="removeCurrency"
+    _test_cases = [
+        ('hkd', 'Currency removed!\n'),
+        ('myr', 'Currency not found!\n')
+    ]
+    
+    def test_cases(self):
+        return self._test_cases
+
+    def check_testbook(self, fn):
+        for args,expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
             with patch('builtins.input', return_value=args):
-                marks = {'John':[0,0],'Jane':[0,0],'Peter':[0,0],'Joe':[0,0]}
-                out, actual = x.compare_printout_with_args(fn, marks)
+                currs = {'USD': 0.73, 'RMB': 5.01, 'HKD': 5.73}
+                out, actual = x.compare_printout_with_args(fn, currs)
                 x.grading_with_string_comparison((args,expected, out))
         
     def check(self, fn):
         self.check_testbook(fn)               
 
 class Question4F(FunctionProblem):
-    _var="displayMarks"
-    _test_cases = [
-        ("""Name     CW  EX  Overall Grade
-John     0   0   0.0      F
-Jane     0   0   0.0      F
-Peter    0   0   0.0      F
-Joe      0   0   0.0      F\n""")
-
-    ]
-    
+    _var="displayCurrencyRates"    
     def test_cases(self):
         return self._test_cases
 
     def check_testbook(self, fn):
         for expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-            with patch('builtins.input', return_value=expected):
-                marks = {'John':[0,0],'Jane':[0,0],'Peter':[0,0],'Joe':[0,0]}
-                out, actual = x.compare_printout_with_args(fn, marks)
-                x.grading_with_string_comparison((marks,expected, out))
-
+            with patch('builtins.input', return_value=expected): # TODO: remove this? 
+                currs = {'USD': 0.73, 'RMB': 5.01, 'HKD': 5.73}
+                out, actual = x.compare_printout_with_args(fn, currs)
+                x.grading_with_string_comparison((currs,expected, out))
+        
     def check(self, fn):
         self.check_testbook(fn)
 
 class Question4G(FunctionProblem):
-    _var="question4g"
+    _var="question3g"
     _test_cases = [
         ('')
     ]
@@ -141,7 +149,8 @@ class Question4G(FunctionProblem):
 
     def check_testbook(self, fn):
         for expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-            with patch('builtins.input', return_value=expected):
+            with patch('builtins.input', return_value=expected): #TODO remove this?
+                currs = {'USD': 0.73, 'RMB': 5.01, 'HKD': 5.73}
                 out, actual = x.compare_printout(fn)
                 x.grading_with_string_comparison((expected,expected, out))
         
