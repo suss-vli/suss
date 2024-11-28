@@ -3,21 +3,34 @@ from unittest.mock import patch
 from ...dev import x
 
 class Question1(FunctionProblem):
-    _var="question1"    
+    _var="question1"
     _test_cases = [
-        ("""Rainfall Summary
-Average rainfall 5.65mm
-No of days with no rain 3 days
-Highest rainfall recorded 20.6mm\n""")
+        ("Dice Occurrence\n"
+         "1    0\n"
+         "2    0\n"
+         "3    0\n"
+         "4    0\n"
+         "5    100\n"
+         "6    0\n"
+         "Total: 100\n")
     ]
-    
+
     def test_cases(self):
         return self._test_cases
-    
+
     def check_testbook(self, fn):
-        for expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-                out, actual = x.compare_printout(fn)
-                x.grading_with_string_comparison(("Data in rainfall.dat", expected, out))
-                        
+        try:
+            with patch('__main__.randint', return_value=5):
+                out, actual = x.compare_printout_from_while_loop(fn)
+                x.grading_with_string_comparison(
+                    ("A hundred of 5s in place of random.randint", self._test_cases[0], out)
+                )
+        except AttributeError:
+            with patch('random.randint', return_value=5):
+                out, actual = x.compare_printout_from_while_loop(fn)
+                x.grading_with_string_comparison(
+                    ("A hundred of 5s in place of random.randint", self._test_cases[0], out)
+                )
+
     def check(self, fn):
         self.check_testbook(fn)

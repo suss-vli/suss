@@ -3,23 +3,27 @@ from unittest.mock import patch
 from ...dev import x
 
 class Question2(FunctionProblem):
-    _var="question2" 
+    _var="question2"
     _test_cases = [
-            ("""Name     Weight   Height   BMI     
-John     50       1.4      25.51
-Peter    60       1.7      20.76
-Amy      40       1.3      23.67
-Nathan   70       1.7      24.22
-Joe      45       1.45     21.4\n""")
-        ]
-        
+        ("S7928964G", """Valid NRIC\n"""),
+        ("S7928964g", """Valid NRIC\n"""),
+        ("S1234567A", """Ref Char is not correct\n"""),
+        ("T1234567J", """Valid NRIC\n"""),
+        ("F76A4321I", """Must consist of 7 digits\n"""),
+        ("G2345678M", """Ref Char is not correct\n"""),
+        ("X7654321I", """The first letter must be S, T, F or G\n"""),
+        ("S7654321*", """Reference letter must be A to Z or a to z\n"""),
+        ("S123456789", """Length must be exactly 9\n""")        
+    ]
+    
     def test_cases(self):
         return self._test_cases
-        
-    def check_testbook(self, fn):            
-        for expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+
+    def check_testbook(self, fn):
+        for args, expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+            with patch('builtins.input', return_value=args):
                 out, actual = x.compare_printout(fn)
-                x.grading_with_string_comparison(("Data in customer.dat", expected, out))
-                        
+                x.grading_with_string_comparison((args, expected, out))
+                     
     def check(self, fn):
-        self.check_testbook(fn)    
+        self.check_testbook(fn)
