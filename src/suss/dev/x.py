@@ -1790,7 +1790,8 @@ def compare_printout_from_while_loop(fn):
             actual = fn()   
         with open('out', 'r', encoding='utf-8') as a:
             out = a.read()
-            
+        
+        os.remove('out')            
         return (out, actual) 
     except:
         # tb = traceback.format_exc()
@@ -1799,6 +1800,7 @@ def compare_printout_from_while_loop(fn):
         # pprint(colored_tb)
         with open('out', 'r', encoding='utf-8') as f:
             contents = f.read()
+        os.remove('out')
         return (contents,None)
 
 def query_config(file):

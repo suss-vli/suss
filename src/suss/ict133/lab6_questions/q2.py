@@ -2,36 +2,53 @@ from learntools.core import *
 from unittest.mock import patch
 from ...dev import x
 
-class Question2(FunctionProblem): 
-    _var="question2"
+class Question2A(FunctionProblem):
+    _var="isArmstrongNumber"
     _test_cases = [
-        """Processing guess of A: 50 Too high
-Processing guess of B: 60 Too high
-Processing guess of C: 70 Too high
-Processing guess of A: 20 Too high
-Processing guess of B: 30 Too high
-Processing guess of C: 10 Correct! in 2 tries
-Winner: C
-Processing guess of A: 1 Too low
-Processing guess of B: 5 Too low
-Processing guess of C: 22 Too high
-Processing guess of A: 10 Correct! in 2 tries
-Processing guess of B: 10 Correct! in 2 tries
-Processing guess of C: 15 Too high
-Winners: A B
-Games winners
-Game 1 Winner: C
-Game 2 Winners: A B\n"""
+        (1, True), 
+        (11, False),
+        (12, False),
+        (153, True),
+        (370, True)
     ]
-        
+    
     def test_cases(self):
         return self._test_cases
 
     def check_testbook(self, fn):
-        with patch('random.randint', return_value=10):
-            with patch('builtins.input', side_effect = ["A","B","C","", "50", "60","70","20", "30", "10", "Y", "1", "5", "22", "10", "10", "15", "N"]):#get_value()):
-                out, actual = x.compare_printout_from_while_loop(fn)
-                x.grading_with_assertion((out == self._test_cases[0]), (["A","B","C","", "50", "60","70","20", "30", "10", "Y", "1", "5", "22", "10", "10", "15", "N"] , self._test_cases[0], out))
-                
+        for test, expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+                actual = fn(test)
+                x.grading((test, expected, actual))
+
     def check(self, fn):
         self.check_testbook(fn)    
+
+class Question2B(FunctionProblem):
+    _var="rollDice"        
+    _test_cases = [
+        ([1, 2, 0, 2, 1, 5], "[2, 4, 1, 6, 5]\n"),
+        ([5, 4, 0], "[6]\n")
+    ]
+
+    def test_cases(self):
+        return self._test_cases
+
+    def check_testbook(self, fn):
+        for test, expected in self._test_cases:
+            try:
+                with patch('__main__.randint', side_effect=test):
+                    out, actual = x.compare_printout(fn)
+                    x.grading_with_string_comparison((test, expected, out))
+            except AttributeError:
+                with patch('random.randint', side_effect=test):
+                    out, actual = x.compare_printout(fn)
+                    x.grading_with_string_comparison((test, expected, out))
+
+
+    def check(self, fn):
+        self.check_testbook(fn)    
+
+Question2 = MultipartProblem(
+    Question2A,
+    Question2B
+)    
