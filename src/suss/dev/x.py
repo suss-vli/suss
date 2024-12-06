@@ -698,6 +698,7 @@ Using the test value of `{}` as input(s), the expected return value should be:
 but got the following instead:
 <pre>`{}`</pre>
 ({})
+
 See the difference:
 <pre><span style=\"font:bold\">"</span>{}<span>"</span></pre>
 """).format(args[0], args[1], type(args[1]).__name__, args[2], type(args[2]).__name__, get_edits_string(str(args[1]), str(args[2])))
