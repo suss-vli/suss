@@ -159,7 +159,7 @@ MYR        3.00\n"""),
 class Question4G(FunctionProblem):
     _var="question4g"
     _test_cases = [
-        ('1', 'sgd', '1', '4', '0', """Menu
+        (['1', 'sgd', '1', '4', '0'], """Menu
 1. Add Currency
 2. Adjust Currency
 3. Remove Currency
@@ -183,7 +183,7 @@ Menu
 3. Remove Currency
 4. Display Currency rates
 0. Quit\n"""),
-        ('2', 'usd', '0.5', '4', '0', """Menu
+        (['2', 'usd', '0.5', '4', '0'], """Menu
 1. Add Currency
 2. Adjust Currency
 3. Remove Currency
@@ -206,7 +206,7 @@ Menu
 3. Remove Currency
 4. Display Currency rates
 0. Quit\n"""),
-        ('3', 'rmb', '4', '0', '', """Menu
+        (['3', 'rmb', '4', '0'], """Menu
 1. Add Currency
 2. Adjust Currency
 3. Remove Currency
@@ -230,7 +230,7 @@ Menu
 0. Quit\n"""),
         # TODO
         # test case for other numbers from 5 to 9 - add on after solution is confirmed, currently still displays currency
-        #  ('5', '0', '', '', '', """Menu
+        #  (['5', '0'], """Menu
 # 1. Add Currency
 # 2. Adjust Currency
 # 3. Remove Currency
@@ -253,10 +253,10 @@ Menu
         return self._test_cases
 
     def check_testbook(self, fn):
-        for a,b,c,d,e,expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-            with patch('builtins.input', side_effect=[a,b,c,d,e]): #TODO remove this?
+        for a,expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+            with patch('builtins.input', side_effect=a): #TODO remove this?
                 out, actual = x.compare_printout(fn)
-                x.grading_with_string_comparison(([a,b,c,d,e],expected, out))
+                x.grading_with_string_comparison((a,expected, out))
         
     def check(self, fn):
         self.check_testbook(fn)

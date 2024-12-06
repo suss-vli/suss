@@ -87,10 +87,10 @@ class Question5C(FunctionProblem):
 class Question5D(FunctionProblem):
     _var="updateMarks"
     _test_cases = [
-        ('Jane', 'C', '2', """Coursework/Exam: 0.0 / 0.0
+        (['Jane', 'C', '2'], """Coursework/Exam: 0.0 / 0.0
 Updated!!\n""", {'John':[0,0],'Jane':[2.0,0],'Peter':[0,0],'Joe':[0,0]}),
-        ('A', '', '', 'A not found\n', {'John':[0,0],'Jane':[0,0],'Peter':[0,0],'Joe':[0,0]}),
-        ('peter', 'e', '1', """Coursework/Exam: 0.0 / 0.0
+        (['A'], 'A not found\n', {'John':[0,0],'Jane':[0,0],'Peter':[0,0],'Joe':[0,0]}),
+        (['peter', 'e', '1'], """Coursework/Exam: 0.0 / 0.0
 Updated!!\n""", {'John':[0,0],'Jane':[0,0],'Peter':[0.0,1.0],'Joe':[0,0]})
         ]
     
@@ -98,12 +98,12 @@ Updated!!\n""", {'John':[0,0],'Jane':[0,0],'Peter':[0.0,1.0],'Joe':[0,0]})
         return self._test_cases
 
     def check_testbook(self, fn):
-        for a,b,c,expected, expected_marks in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-            with patch('builtins.input', side_effect=[a,b,c]):
+        for a, expected, expected_marks in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+            with patch('builtins.input', side_effect=a):
                 marks = {'John':[0,0],'Jane':[0,0],'Peter':[0,0],'Joe':[0,0]}
                 out, actual = x.compare_printout_with_args(fn, marks)
-                x.grading_with_string_comparison(([a,b,c],expected, out))
-                x.grading(([a,b,c], expected_marks, marks))
+                x.grading_with_string_comparison((a,expected, out))
+                x.grading((a, expected_marks, marks))
         
     def check(self, fn):
         self.check_testbook(fn)
@@ -165,7 +165,7 @@ Joe      100.0 100.0 100.0   P\n""")
 class Question5G(FunctionProblem):
     _var="question5g"
     _test_cases = [
-        ('1', 'tom', '80', '89.9', '4', '0', """Menu
+        (['1', 'tom', '80', '89.9', '4', '0'], """Menu
 1. Add marks
 2. Update marks
 3. Remove student
@@ -190,7 +190,7 @@ Menu
 3. Remove student
 4. Display marks
 0. Quit\n"""),
-        ('2', 'Jane', 'e', '51', '4', '0', """Menu
+        (['2', 'Jane', 'e', '51', '4', '0'], """Menu
 1. Add marks
 2. Update marks
 3. Remove student
@@ -215,7 +215,7 @@ Menu
 3. Remove student
 4. Display marks
 0. Quit\n"""),
-        ('3', 'peter', '4', '0', '', '', """Menu
+        (['3', 'peter', '4', '0'], """Menu
 1. Add marks
 2. Update marks
 3. Remove student
@@ -240,7 +240,7 @@ Menu
 0. Quit\n"""),
          # TODO
         # test case for other numbers from 5 to 9 - add on after solution is confirmed, currently still displays marks
-        #  ('5', '0', '', '', '', """Menu
+        #  (['5', '0'], """Menu
 # 1. Add marks
 # 2. Update marks
 # 3. Remove student
@@ -263,10 +263,10 @@ Menu
         return self._test_cases
 
     def check_testbook(self, fn):
-        for a,b,c,d,e,f,expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
-            with patch('builtins.input', side_effect=[a,b,c,d,e,f]):
+        for a, expected in self._test_cases: # for each testcase, we assert that it is similar to the test value.
+            with patch('builtins.input', side_effect=a):
                 out, actual = x.compare_printout(fn)
-                x.grading_with_string_comparison(([a,b,c,d,e,f],expected, out))
+                x.grading_with_string_comparison((a,expected, out))
         
     def check(self, fn):
         self.check_testbook(fn)
