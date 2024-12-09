@@ -5,7 +5,7 @@ from ...dev import x
 class Question1A(FunctionProblem):
     _var="JuniorAccount"    
     _test_cases = [
-        (['_interestRate', 'accountId', 'accumulateInterest', 'balance', 'deposit', 'guardian', 'transfer', 'withdraw'], '002', 'John', 100, 0.04, 0.03, ['001', 100], 104, 103, """Guardian: John 002 100.00""", """Guardian: John 002 104.00""")
+        (['_interestRate', 'accountId', 'accumulateInterest', 'balance', 'deposit', 'guardian', 'transfer', 'withdraw'], '002', 'John', 100, 0.04, 0.03, ['001', 100], 104, 103, """002 100.00	John""", """002 104.00	John""")
     ]
     
     # def test_cases(self):
@@ -23,7 +23,7 @@ class Question1A(FunctionProblem):
                 else:
                     x.justfail((item, fn.__name__))
                 if item == "_interestRate":
-                    if fn._interestRate == 0.04:
+                    if fn._interestRate == 0.04 or (fn._interestRate + fn._BONUS) == 0.04:
                         x.justpass()
                     else:
                         x.justfail(item, f"""iLabGuide detected that `_interestRate` is `{fn._interestRate}`. It should be `0.04`.""")
@@ -37,7 +37,10 @@ class Question1A(FunctionProblem):
             ba1 = ba(*test[6])
             ja1 = fn(test[1], test[2], test[3])
 
-            x.determine_the_grading_method(((test[1], test[2], test[3]), test[4], ja1._interestRate, ))
+            try:
+                x.determine_the_grading_method(((test[1], test[2], test[3]), test[4], ja1._interestRate))
+            except AssertionError as e:
+                x.determine_the_grading_method(((test[1], test[2], test[3]), test[4], ja1._interestRate + ja1._BONUS))
             x.determine_the_grading_method(((test[1], test[2], test[3]), test[5], ba1._interestRate))
  
             x.determine_the_grading_method(((test[1], test[2], test[3]), test[9], ja1.__str__))
@@ -65,21 +68,24 @@ class Question1A(FunctionProblem):
 class Question1B(FunctionProblem):
     _var="question1b"    
     _test_cases = [
-        (['002', 'John', 135.20], ['_interestRate', 'accountId', 'accumulateInterest', 'balance', 'deposit', 'guardian', 'transfer', 'withdraw'], """Guardian: John 002 150.00
-Guardian: John 002 130.00
-Guardian: John 002 130.00
-Guardian: John 002 135.20\n""")
+        (['234', 'Mommy', 260.00], ['_interestRate', 'accountId', 'accumulateInterest', 'balance', 'deposit', 'guardian', 'transfer', 'withdraw'], """123 250.00
+234 200.00	Mommy
+Deposit 100...
+  234 300.00	Mommy
+Withdraw 100...  False
+Withdraw 50...  True
+234 250.00	Mommy
+123 257.50
+234 260.00	Mommy\n""")
     ]
     
-    # def test_cases(self):
-    #     return self._test_cases
-
+    
     def check_testbook(self, fn):
         for test in self._test_cases: 
             out, actual = x.compare_printout(fn)
             
             if actual is None:
-                x.justfail("None", f"{self._var}() is {actual}. Please attempt the question and run the question again.")
+                x.justfail("None", f"{self._var}() is {actual}. Please attempt the question and run the question again or return the `JuniorAccount` object.")
             else:
                 for item in test[1]:
                     if item in dir(actual):
