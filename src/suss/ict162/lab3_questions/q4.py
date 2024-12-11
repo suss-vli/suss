@@ -4,8 +4,8 @@ from suss.dev import x
 class Question4(FunctionProblem):
     _var="HSBCMovieCard"
     _test_cases = [
-        ('John', 70, 12, 3, 5, 4, """Name: John Ticket price: $70, tickets remaining: 11""", """Name: John Ticket price: $70, tickets remaining: 8""", """Name: John Ticket price: $70, tickets remaining: 0"""),
-        ('Jane', 100, 17, 3, 5, 4, """Name: Jane Ticket price: $100, tickets remaining: 16""", """Name: Jane Ticket price: $100, tickets remaining: 13""", """Name: Jane Ticket price: $100, tickets remaining: 1""")
+        ('John', 70, 12, 3, 5, 4, """Name: John Ticket price: $70.00, tickets remaining: 11""", """Name: John Ticket price: $70.00, tickets remaining: 8""", """Name: John Ticket price: $70.00, tickets remaining: 0"""),
+        ('Jane', 100, 17, 3, 5, 4, """Name: Jane Ticket price: $100.00, tickets remaining: 16""", """Name: Jane Ticket price: $100.00, tickets remaining: 13""", """Name: Jane Ticket price: $100.00, tickets remaining: 1""")
     ]
     
     def test_cases(self):

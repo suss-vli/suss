@@ -4,7 +4,7 @@ from suss.dev import x
 class Question3(FunctionProblem):
     _var="MovieCard"
     _test_cases = [
-        (70, 10, 3, 5, 2, """Ticket price: $70, tickets remaining: 9""", """Ticket price: $70, tickets remaining: 1""")
+        (70, 10, 3, 5, 2, """Ticket price: $70.00, tickets remaining: 9""", """Ticket price: $70.00, tickets remaining: 1""")
     ]
     
     def test_cases(self):
@@ -29,7 +29,7 @@ class Question3(FunctionProblem):
               
             x.determine_the_grading_method((test[0], test[6], m.__str__))
 
-            x.grading_check_setter("`m.tickets = 1`", 1, m, "tickets", m._tickets, "@tickets.setter")
+            x.grading_check_setter("`m.tickets = 1`", 1, m, "tickets", m.tickets, "@tickets.setter")
 
     def check(self, fn):
         self.check_testbook(fn)       

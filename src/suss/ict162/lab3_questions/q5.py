@@ -4,32 +4,11 @@ from suss.dev import x
 class Question5A(FunctionProblem):
     _var="Vehicle"
     _test_cases = [
-        (['capacity', 'computeRoadTax', 'installment', 'vehNo'], 'v1', 2000, 'John', 55, """John 55 v1 Capacity: 2000 Road Tax: $1800.0 """)
+        (['capacity', 'computeRoadTax', 'vehNo'], 'v1', 2000, 'John', 55, """Owner: John Age: 55 Road Tax: $1800.00 Vehicle No: v1 Engine Capacity: 2000cc""")
     ]
     
     def test_cases(self):
         return self._test_cases
-    
-    passenger_vehicle = """
-    
-class PassengerVehicle(Vehicle):
-    def __init__(self, vehNo, capacity, owner, age):
-        # write your answer here
-        super().__init__(vehNo, capacity)
-        self._owner = owner
-        self._age = age
-        pass
-        
-    def computeRoadTax(self):
-        # write your answer here
-        return self.capacity if self._age < 55 else 0.9 * self.capacity
-        pass
-        
-    def __str__(self):
-        # write your answer here
-        return f'{self._owner} {self._age} {super().__str__()} '
-"""
-    
 
     def check_testbook(self, fn):
         for test in self._test_cases:
@@ -41,11 +20,11 @@ class PassengerVehicle(Vehicle):
                         x.justpass()
                     else:
                         x.justfail(item, "`vehNo` should be a property.")
-                elif item == "loan":
-                    if isinstance(fn.loan, property):
+                elif item == "computeRoadTax":
+                    if fn.computeRoadTax.__isabstractmethod__:
                         x.justpass()
                     else:
-                        x.justfail(item, "`loan` should be a property.")
+                        x.justfail(item, "`function` should be an abstract method.")
                 elif item == "capacity":
                     if isinstance(fn.capacity, property):
                         x.justpass()
@@ -59,12 +38,12 @@ class PassengerVehicle(Vehicle):
             
             #testing abstract class string
             code = x.get_source_code("lab3", 38, "Vehicle")
-            combined = code + self.passenger_vehicle
+            passenger_vehicle_code = x.get_produce_expected("lab3", "q5", "q5a")
+            combined = code + "\n" + passenger_vehicle_code
             x.test_for_none_162(combined, "lab3", "38", ["Vehicle","PassengerVehicle"])
             data = x.create_many_objects_from_source_code(combined, ["Vehicle", "PassengerVehicle"])
-            pv = data["PassengerVehicle"]
-            c1 = pv(test[1], test[2], test[3], test[4])
-            x.determine_the_grading_method((('v1', 2000, 'John', 55,), test[5], c1.__str__))
+            pv = data["PassengerVehicle"](test[1], test[2], test[3], test[4])
+            x.determine_the_grading_method((('v1', 2000, 'John', 55,), test[5], pv.__str__))
                 
     def check(self, fn):
         self.check_testbook(fn)      
@@ -72,8 +51,8 @@ class PassengerVehicle(Vehicle):
 class Question5B(FunctionProblem):
     _var="PassengerVehicle"
     _test_cases = [
-        ('v1', 2000, 'John', 55, """John 55 v1 Capacity: 2000 Road Tax: $1800.0 """),
-        ('v2', 2000, 'Jane', 54, """Jane 54 v2 Capacity: 2000 Road Tax: $2000 """)
+        ('v1', 2000, 'John', 55, """Owner: John Age: 55 Road Tax: $1800.00 Vehicle No: v1 Engine Capacity: 2000cc"""),
+        ('v2', 2000, 'Jane', 54, """Owner: Jane Age: 54 Road Tax: $2000.00 Vehicle No: v2 Engine Capacity: 2000cc""")
     ]
     
     def test_cases(self):
@@ -90,8 +69,8 @@ class Question5B(FunctionProblem):
 class Question5C(FunctionProblem):
     _var="CommercialVehicle"
     _test_cases = [
-        ('v3', 5000, 'company1', 3, """company1 3 v3 Capacity: 5000 Road Tax: $5000"""),
-        ('v4', 5000, 'company2', 3.1, """company2 3.1 v4 Capacity: 5000 Road Tax: $7500.0""")
+        ('v3', 5000, 'company1', 3, """Company: company1 Max Laden Weight: 3 Road Tax: $5000.00 Vehicle No: v3 Engine Capacity: 5000cc"""),
+        ('v4', 5000, 'company2', 3.1, """Company: company2 Max Laden Weight: 3.1 Road Tax: $7500.00 Vehicle No: v4 Engine Capacity: 5000cc""")
     ]
     
     def test_cases(self):
@@ -108,14 +87,14 @@ class Question5C(FunctionProblem):
 class Question5D(FunctionProblem):
     _var="question5d"
     _test_cases = [
-        (['_age', '_capacity', '_owner', '_vehNo', 'capacity', 'computeRoadTax', 'installment', 'vehNo'], ['_capacity', '_coyReg', '_maxLadenWeight', '_vehNo', 'capacity', 'computeRoadTax', 'installment', 'vehNo'], ['v1', 2000, 'John', 55], ['v2', 2000, 'Jane', 54], ['v3', 5000, 'company1', 3], ['v4', 5000, 'company2', 3.1], """John 55 v1 Capacity: 2000 Road Tax: $1800.0 
-150.0
-Jane 54 v2 Capacity: 2000 Road Tax: $2000 
-166.66666666666666
-company1 3 v3 Capacity: 5000 Road Tax: $5000
-416.6666666666667
-company2 3.1 v4 Capacity: 5000 Road Tax: $7500.0
-625.0\n""")
+        (['_age', '_owner', '_vehNo', 'capacity', 'computeRoadTax', 'vehNo'], ['_CommercialVehicle__coyReg', '_CommercialVehicle__maxLadenWeight', 'vehNo', 'capacity', 'computeRoadTax', 'vehNo'], ['GOAT2020', 3000, 'Roger', 41], ['GOAT1990', 3000, 'Boris', 59], ['FXT2021', 3000, 'UEN20303', 3], ['FXR3333', 4500, 'UEN20303', 5], """Owner: Roger Age: 41 Road Tax: $3000.00 Vehicle No: GOAT2020 Engine Capacity: 3000cc
+3000
+Company: UEN20303 Max Laden Weight: 5 Road Tax: $6750.00 Vehicle No: FXR3333 Engine Capacity: 4500cc
+6750.0
+Owner: Boris Age: 59 Road Tax: $2700.00 Vehicle No: GOAT1990 Engine Capacity: 3000cc
+2700.0
+Company: UEN20303 Max Laden Weight: 3 Road Tax: $3000.00 Vehicle No: FXT2021 Engine Capacity: 3000cc
+3000\n""")
     ]
     
     def test_cases(self):
@@ -164,13 +143,13 @@ company2 3.1 v4 Capacity: 5000 Road Tax: $7500.0
             x.determine_the_grading_method(("question5d()", pv1.__str__(), actual[0].__str__))
             
             # Test below is to assert p2 string
-            x.determine_the_grading_method(("question5d()", pv2.__str__(), actual[1].__str__))
+            x.determine_the_grading_method(("question5d()", pv2.__str__(), actual[2].__str__))
 
             # Test below is to assert c1 string
-            x.determine_the_grading_method(("question5d()", cv1.__str__(), actual[2].__str__))
+            x.determine_the_grading_method(("question5d()", cv1.__str__(), actual[3].__str__))
             
             # Test below is to assert c2 string
-            x.determine_the_grading_method(("question5d()", cv2.__str__(), actual[3].__str__))
+            x.determine_the_grading_method(("question5d()", cv2.__str__(), actual[1].__str__))
 
             # Test below is to assert the whole printout
             x.determine_the_grading_method(("question5d()", test[6], out))

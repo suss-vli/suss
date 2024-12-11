@@ -34,7 +34,7 @@ class Question2A(FunctionProblem):
             ba1.accumulateInterest()
             x.determine_the_grading_method(((test[8]), test[9], ba1.__str__))
 
-            x.grading_check_setter("`ba1.balance = 1.00`", 1.00, ba1, "balance", ba1._balance, "@balance.setter")         
+            x.grading_check_setter("`ba1.balance = 1.00`", 1.00, ba1, "balance", ba1.balance, "@balance.setter")         
 
     def check(self, fn):
         self.check_testbook(fn)       
@@ -42,8 +42,8 @@ class Question2A(FunctionProblem):
 class Question2B(FunctionProblem):
     _var="JuniorAccount"
     _test_cases = [
-        ('002', 200, 'Jane', 40, 70, 'Guardian: Jane 002 160.00', 'Guardian: Jane 002 90.00'),
-        ('001', 100, 'John', 30, 60, 'Guardian: John 001 70.00', 'Guardian: John 001 10.00')
+        ('002', 'Jane', 200, 40, 70, '002 160.00	Jane', '002 160.00	Jane'),
+        ('001', 'John', 100, 30, 60, '001 70.00	John', '001 70.00	John')
     ]
     
     def test_cases(self):
@@ -52,7 +52,6 @@ class Question2B(FunctionProblem):
     def check_testbook(self, fn):
         for test in self._test_cases: 
             ja1 = fn(test[0], test[1], test[2])
-            #TODO Do we need to test for a `False` case?
             ja1.withdraw(test[3])
             x.determine_the_grading_method(((test[0], test[1], test[2], test[3]), test[5], ja1.__str__))
             x.determine_the_grading_method(((test[0], test[1], test[2], test[3]), False, ja1.withdraw(test[4]))) 
@@ -66,8 +65,8 @@ class Question2B(FunctionProblem):
 class Question2C(FunctionProblem):
     _var="JuniorAccount"
     _test_cases = [
-        ('002', 200, 'Jane', 150, ['001', 100], 'Guardian: Jane 002 50.00', '001 250.00'),
-        ('001', 100, 'John', 30, ['002', 10], 'Guardian: John 001 70.00', '002 40.00')
+        ('002', 'Jane', 200, 150, ['001', 100], '002 50.00	Jane', '001 250.00'),
+        ('001', 'John', 100, 30, ['002', 10], '001 70.00	John', '002 40.00')
     ]
     
     def test_cases(self):
@@ -78,7 +77,7 @@ class Question2C(FunctionProblem):
             ba = x.get_object_from_lab("lab3", 17, "BankAccount")
             ba1 = ba(*test[4])
             ja1 = fn(test[0], test[1], test[2])
-            ja1.transfer(ba1, test[3], test[2])
+            ja1.transfer(ba1, test[3], test[1])
             x.determine_the_grading_method(((test[0], test[1], test[2], test[3]), test[5], ja1.__str__))
             x.determine_the_grading_method(((test[0], test[1], test[2], test[3]), test[6], ba1.__str__))
             

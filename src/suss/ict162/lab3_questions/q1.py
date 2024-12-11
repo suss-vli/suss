@@ -23,10 +23,13 @@ class Question1A(FunctionProblem):
                 else:
                     x.justfail((item, fn.__name__))
                 if item == "_interestRate":
-                    if fn._interestRate == 0.04 or (fn._interestRate + fn._BONUS) == 0.04:
-                        x.justpass()
-                    else:
-                        x.justfail(item, f"""iLabGuide detected that `_interestRate` is `{fn._interestRate}`. It should be `0.04`.""")
+                    try: 
+                        if fn._interestRate == 0.04 or (fn._interestRate + fn._BONUS) == 0.04:
+                            x.justpass()
+                        else:
+                            x.justfail(item, f"""LabGuide detected that `_interestRate` is `{fn._interestRate}`. It should be `0.04`.""")
+                    except AttributeError as e:
+                        x.justfail(item, f"""{e}. Please define the missing attribute in `JuniorAccount` class.""")
                 elif item == "guardian":
                     if isinstance(fn.guardian, property):
                         x.justpass()
