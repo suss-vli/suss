@@ -2,35 +2,30 @@ from learntools.core import *
 from ...dev import x
 
 class Question2(FunctionProblem):
-    _var="Bank"
+    _var="Corporate"
     _test_cases = [
-        ('123', 'Tom', 2800, 10000, '922', 'Sally', 'Food', 10000, 10000, """Id: 123 Name: Tom   Loan: $10000 Salary: $2800.00                    Credit Limit: $ 84000 Interest on Loan: $350""", """Id: 123 Name: Tom   Loan: $10000 Salary: $2800.00                    Credit Limit: $ 84000 Interest on Loan: $350
-Id: 922 Name: Sally Loan: $10000 Business: Food Asset Value: $10000  Credit Limit: $ 30000 Interest on Loan: $300""", """Id: 922 Name: Sally Loan: $10000 Business: Food Asset Value: $10000""")
-    ]
-    
-    # def test_cases(self):
-    #     return self._test_cases
+        (["tc@gmail.com", "TC Tan", "ThatCompany", True], 0.6, "Name: TC Tan	 Email: tc@gmail.com Company: ThatCompany SME: Yes"),
+        (["jane.doe@example.com", "Jane Doe", "TechCorp", False], 0.5, "Name: Jane Doe	 Email: jane.doe@example.com Company: TechCorp SME: No"),
+        (["bob.builder@email.com", "Bob Builder", "BuildIt Inc.", True], 0.6, "Name: Bob Builder	 Email: bob.builder@email.com Company: BuildIt Inc. SME: Yes")
 
+    ]
     def check_testbook(self, fn):
+        if fn.__base__.__name__ == "Customer":
+            x.justpass()
+        else:
+            x.justfail(fn.__base__, "`Corporate` class should inherit from `Customer` class.")
+        
+        if fn.__base__.getDiscount.__isabstractmethod__ == True:
+            x.justpass()
+        else:
+            x.justfail(fn.__base__.getDiscount, "`getDiscount` method should be an abstract method in `Customer` class.")
         for test in self._test_cases:
-            customer_code = x.get_source_code("lab6", 5, "Customer") 
-            valued_customer_code = x.get_source_code("lab6", 9, "ValuedCustomer") 
-            corporate_customer_code =x.get_source_code("lab6", 13, "CorporateCustomer")
-            text_source = customer_code + valued_customer_code + corporate_customer_code
-            x.test_for_none_162(text_source, "lab6", "5,9,13", ["Customer", "ValuedCustomer", "CorporateCustomer"])
-            data = x.create_many_objects_from_source_code(text_source, ["Customer", "ValuedCustomer", "CorporateCustomer"])
-            
-            c1 = data["Customer"]
-            vc = data["ValuedCustomer"]
-            cc = data["CorporateCustomer"]
-            
-            cList = fn()
-            cList.add(vc(test[0], test[1], test[2], test[3]))
-            
-            x.determine_the_grading_method(((test[0], test[1], test[2], test[3]), test[9], cList.listAllStr))
-            cList.add(cc(test[4], test[5], test[6], test[7], test[8]))
-            x.determine_the_grading_method(((test[0], test[1], test[2], test[3], test[4], test[5], test[6], test[7], test[8]), test[10], cList.listAllStr))
-            x.determine_the_grading_method(((test[0], test[1], test[2], test[3], test[4], test[5], test[6], test[7], test[8]), test[11], cList.search), test[4])
+            cc = fn(test[0][0], test[0][1], test[0][2], test[0][3])
+
+            x.determine_the_grading_method(((test[0][0], test[0][1], test[0][2], test[0][3]), test[1], cc.getDiscount()))
+            x.determine_the_grading_method(((test[0][0], test[0][1], test[0][2], test[0][3]), test[0][0], cc.email))
+            x.determine_the_grading_method(((test[0][0], test[0][1], test[0][2], test[0][3]), test[0][1], cc.name))
+            x.determine_the_grading_method(((test[0][0], test[0][1], test[0][2], test[0][3]), test[2], cc.__str__()))
 
     def check(self, fn):
         self.check_testbook(fn)       

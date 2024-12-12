@@ -2,7 +2,7 @@ from learntools.core import *
 from ...dev import x
 
 class Question3A(FunctionProblem):
-    _var="InvalidCustomerException"
+    _var="ProviderException"
     _test_cases = [()]
     
     # def test_cases(self):
@@ -24,30 +24,6 @@ class Question3B(FunctionProblem):
         (['PREVAILING_INTEREST','checkId', 'checkLoan', 'getCreditLimit', 'getInterestOnLoan', 'getInterestRate', 'id', 'loan', 'name'], '123', """First character of customer id must be either V or C: 1\n""", 100000, """Loan amount $100000 exceeds credit limit: $84000.0"""),
         (['PREVAILING_INTEREST', 'checkId', 'checkLoan', 'getCreditLimit', 'getInterestOnLoan', 'getInterestRate', 'id', 'loan', 'name'], 'Cat', """Second character onwards must be a digit: at\n""", 200000, """Loan amount $200000 exceeds credit limit: $84000.0""")
     ]
-    
-    # def test_cases(self):
-    #     return self._test_cases
-
-    valued_customer = """
-    
-class ValuedCustomer(Customer2):
-    def __init__(self, custid, name, salary, loan):
-        self._salary = salary
-        super().__init__(custid, name, loan)
-        
-    @property
-    def salary(self):
-        return self._salary
-    
-    def getCreditLimit(self):
-        return self._salary * 12 * 2.5
-
-    def getInterestOnLoan(self):
-        return self._loan * (type(self).getInterestRate() + 0.01)
-    
-    def __str__(self):
-        return f'{super().__str__()} Salary: ${self._salary}'
-"""
 
     def check_testbook(self, fn):
         # TODO: need to change the question to define message for exception
