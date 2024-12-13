@@ -11,24 +11,24 @@ class Question1A(FunctionProblem):
     
 
     def check_testbook(self, fn):
-        for test in self._test_cases:
-            answer = dir(fn)
-            for item in ['email', 'ratePerDay']:
-                if item in answer: 
+        answer = dir(fn)
+        for item in ['email', 'ratePerDay']:
+            if item in answer: 
+                x.justpass()
+            else:
+                x.justfail((item, fn.__name__))
+            if item == "email":
+                if isinstance(fn.email, property):
                     x.justpass()
                 else:
-                    x.justfail((item, fn.__name__))
-                if item == "email":
-                    if isinstance(fn.email, property):
-                        x.justpass()
-                    else:
-                        x.justfail(item, "`email` should be a property.")
-                elif item == "ratePerDay":
-                    if isinstance(fn.ratePerDay, property):
-                        x.justpass()
-                    else:
-                        x.justfail(item, "`ratePerDay` should be a property.")
+                    x.justfail(item, "`email` should be a property.")
+            elif item == "ratePerDay":
+                if isinstance(fn.ratePerDay, property):
+                    x.justpass()
+                else:
+                    x.justfail(item, "`ratePerDay` should be a property.")
 
+        for test in self._test_cases:
             inst = fn(test[0], test[1], test[2])
             x.determine_the_grading_method(((test[0], test[1], test[2]), test[2], inst.ratePerDay))
             x.determine_the_grading_method(((test[0], test[1], test[2]), test[3], inst.__str__()))
