@@ -629,7 +629,7 @@ def grading_with_string_comparison2(args):
     """Grading Functionalities"""
     if callable(args[1]):
         assert args[0] == args[1](), ("""
-iLabGuide expects the print statement to be:
+LabGuide expects the print statement to be:
 <pre>`{}`</pre>
 ({})
 
@@ -642,8 +642,7 @@ See the String diff:
 """).format(args[0], type(args[0]).__name__, args[1](), type(args[1]()).__name__, get_edits_string(args[0], args[1]))
     else:
         assert args[0] == args[1], ("""
-iLabGuide expects the print statement to be:
-<pre>`{}`</pre>
+LabGuide expects the print statement to be:<pre>`{}`</pre>
 ({})
 
 but got the following statement instead:
