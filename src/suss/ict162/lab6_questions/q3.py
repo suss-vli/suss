@@ -148,9 +148,9 @@ Instructor email: rachel@abc.com   Name: Rachel
             
             x.determine_the_grading_method(((reg, reg1), test[9], list(tp._TrainingProvider__registrations.keys())))
             
-            # testing printRegistration
-            out, actual = x.compare_printout(tp.printRegistration)
-            x.determine_the_grading_method(((reg, reg1), test[11], out))
+            # # testing printRegistration - uncomment when instructor confirms to add printRegistration into question
+            # out, actual = x.compare_printout(tp.printRegistration)
+            # x.determine_the_grading_method(((reg, reg1), test[11], out))
             
             # testing providerexception 1: customer has already reigstered
             try:
