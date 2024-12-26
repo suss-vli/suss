@@ -185,34 +185,34 @@ class Question3D(FunctionProblem):
     _test_cases = [
         ("""in try block: 
 Registrations for SUSS:
-('TC Tan', 1, 'Prog101') : Registration: Name: TC Tan	 Email: tc@gmail.com Company: ThatCompany SME: Yes+Schedule Id: Prog101_1 	Start Date: 2024-12-14 00:00:00 	Duration: 2 days
+('TC Tan', 1, 'Prog101') : Registration: Name: TC Tan	 Email: tc@gmail.com Company: ThatCompany SME: Yes+Schedule Id: Prog101_1 	Start Date: 2025-10-01 00:00:00 	Duration: 2 days
 Course Code: Prog101   Course Name: Python Programming
 Instructor email: John@email.com   Name: John
 ---
 in else block
 Registrations for SUSS:
 in finally block
-Registrations for SUSS:\n""")
-        # the following is the test case for if `Individual` `dd` and `reg1` is added to TrainingProvider
+Registrations for SUSS:\n"""),
+#         # the following is the test case for if `Individual` `dd` and `reg1` is added to TrainingProvider
 #         ("""in try block: 
 # Registrations for SUSS:
-# ('TC Tan', 1, 'Prog101') : Registration: Name: TC Tan	 Email: tc@gmail.com Company: ThatCompany SME: Yes+Schedule Id: Prog101_1 	Start Date: 2024-12-14 00:00:00 	Duration: 2 days
+# ('TC Tan', 1, 'Prog101') : Registration: Name: TC Tan	 Email: tc@gmail.com Company: ThatCompany SME: Yes+Schedule Id: Prog101_1 	Start Date: 2025-10-01 00:00:00 	Duration: 2 days
 # Course Code: Prog101   Course Name: Python Programming
 # Instructor email: John@email.com   Name: John
 # ---
-# ('Tan Tan', 2, 'Prog101') : Registration: Name: Tan Tan	 Email: TanTan@gmail.com Skill Upgrade: No+Schedule Id: Prog101_1 	Start Date: 2024-12-14 00:00:00 	Duration: 2 days
+# ('Tan Tan', 2, 'Prog101') : Registration: Name: Tan Tan	 Email: TanTan@gmail.com Skill Upgrade: No+Schedule Id: Prog101_1 	Start Date: 2025-10-01 00:00:00 	Duration: 2 days
 # Course Code: Prog101   Course Name: Python Programming
 # Instructor email: John@email.com   Name: John
 # ---
 # in else block
 # Registrations for SUSS:
-# ('Tan Tan', 2, 'Prog101') : Registration: Name: Tan Tan	 Email: TanTan@gmail.com Skill Upgrade: No+Schedule Id: Prog101_1 	Start Date: 2024-12-14 00:00:00 	Duration: 2 days
+# ('Tan Tan', 2, 'Prog101') : Registration: Name: Tan Tan	 Email: TanTan@gmail.com Skill Upgrade: No+Schedule Id: Prog101_1 	Start Date: 2025-10-01 00:00:00 	Duration: 2 days
 # Course Code: Prog101   Course Name: Python Programming
 # Instructor email: John@email.com   Name: John
 # ---
 # in finally block
 # Registrations for SUSS:
-# ('Tan Tan', 2, 'Prog101') : Registration: Name: Tan Tan	 Email: TanTan@gmail.com Skill Upgrade: No+Schedule Id: Prog101_1 	Start Date: 2024-12-14 00:00:00 	Duration: 2 days
+# ('Tan Tan', 2, 'Prog101') : Registration: Name: Tan Tan	 Email: TanTan@gmail.com Skill Upgrade: No+Schedule Id: Prog101_1 	Start Date: 2025-10-01 00:00:00 	Duration: 2 days
 # Course Code: Prog101   Course Name: Python Programming
 # Instructor email: John@email.com   Name: John
 # ---\n""")
