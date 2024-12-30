@@ -6,7 +6,13 @@ from learntools.core import *
 from tkinter import ttk, Label, Button, scrolledtext
 
 class Question4(FunctionProblem):
-    Instructor = x.get_object_from_lab("lab6", 5, "Instructor")
+    try:
+        Instructor = x.get_object_from_lab("lab6", 5, "Instructor")
+        test_instrctor = Instructor("abc@abc.com", "abc", 100)
+    except:
+        instructor_code = x.get_produce_expected("lab6", "q4", "q4")
+        Instructor = x.create_object_from_source_code(instructor_code, "Instructor")
+        
     _var="TrainingProviderGUI"
     _test_cases = [
         ({'a@abc.com': Instructor("a@abc.com", "a", 250), 'b@abc.com': Instructor("b@abc.com", "b", 300),'c@abc.com': Instructor("c@abc.com", "c", 350)}, """Instructors:
