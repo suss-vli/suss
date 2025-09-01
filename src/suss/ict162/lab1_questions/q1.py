@@ -7,9 +7,8 @@ class Question1(FunctionProblem):
     _test_cases = [
         (['gender', 'getFullName', 'getInitials', 'lastName', 'name'], 'm', 'ah seng', 'tan', "Mr. Tan Ah Seng", "A. S. Tan", "Name: Tan Ah Seng     Gender : Male"),
         (['gender', 'getFullName', 'getInitials', 'lastName', 'name'], 'f', 'mary', 'taylor', "Ms. Taylor Mary", "M. Taylor", "Name: Taylor Mary     Gender : Female")
-        ]
+    ]
 
-    # to fix this https://vlisuss.atlassian.net/browse/VLI-32?focusedCommentId=10018
     def check_testbook(self, fn):
         for test in self._test_cases:
             print(f"Test: {test}")
@@ -43,8 +42,9 @@ class Question1(FunctionProblem):
             x.determine_the_grading_method(((test[1], test[2], test[3]), test[5], p1.getInitials))
             x.determine_the_grading_method(((test[1], test[2], test[3]), test[6], p1.__str__))
 
-            x.grading_check_setter("`p1.name = Tom`", "Tom", p1, "name", p1._name, "@name.setter")
-            x.grading_check_setter("`p1.lastName = Lim`", "Lim", p1, "lastName", p1._lastName, "@lastName.setter")
+            # account for name mangling: _Person__name, _Person__lastName
+            x.grading_check_setter("`p1.name = Tom`", "Tom", p1, "name", p1._Person__name, "@name.setter")
+            x.grading_check_setter("`p1.lastName = Lim`", "Lim", p1, "lastName", p1._Person__lastName, "@lastName.setter")
             
     def check(self, fn):
         self.check_testbook(fn)

@@ -2,3 +2,7 @@ dist/*
 ict133/__pycache__/*
 x/__pycache__/*
 venv/*
+src/suss/__pycache__/
+src/suss/dev/__pycache__/
+src/suss/ict162/__pycache__/
+src/suss/ict162/lab1_questions/__pycache__/

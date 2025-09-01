@@ -46,7 +46,7 @@ class Question4(FunctionProblem):
             x.determine_the_grading_method((('b1.withdraw(20)', 'b1.transfer(b2, 20)'), test[8], b1.__str__))
             x.determine_the_grading_method((('b1.withdraw(20)', 'b1.transfer(b2, 20)'), test[9], b2.__str__))
 
-            x.grading_check_setter("`b1.balance = 1.00`", 1.00, b1, "balance", b1._balance, "@balance.setter")         
+            x.grading_check_setter("`b1.balance = 1.00`", 1.00, b1, "balance", b1._BankAccount__balance, "@balance.setter")         
             
     def check(self, fn):
         self.check_testbook(fn)       

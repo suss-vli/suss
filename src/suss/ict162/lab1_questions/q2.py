@@ -36,8 +36,9 @@ class Question2(FunctionProblem):
             x.determine_the_grading_method(((test[1], test[2], test[3], test[4]), True, r1.isBigger(r2)))
             x.determine_the_grading_method(((test[1], test[2], test[3], test[4]), False, r2.isBigger(r1)))
 
-            x.grading_check_setter("`r1.length = 1`", 1, r1, "length", r1._length, "@length.setter")
-            x.grading_check_setter("`r1.width = 1`", 1, r1, "width", r1._width, "@width.setter")
+            # updated for name mangling
+            x.grading_check_setter("`r1.length = 1`", 1, r1, "length", r1._Rectangle__length, "@length.setter")
+            x.grading_check_setter("`r1.width = 1`", 1, r1, "width", r1._Rectangle__width, "@width.setter")
 
     def check(self, fn):
         self.check_testbook(fn)    
