@@ -14,6 +14,9 @@ class Question2A(FunctionProblem):
 
     def check_testbook(self, fn):
         for test in self._test_cases:
+            if fn.__class__.__name__ != self._var:
+                x.justfail("BankAccount", "`BankAccount` class is not defined. Please attempt the question and try again.")
+                
             for item in test[0]:
                 if item in dir(fn):
                     x.justpass()
@@ -51,7 +54,10 @@ class Question2B(FunctionProblem):
 
     def check_testbook(self, fn):
         for test in self._test_cases: 
-            ja1 = fn(test[0], test[1], test[2])
+            try:
+                ja1 = fn(test[0], test[1], test[2])
+            except TypeError as e:
+                x.justfail("JuniorAccount", "`JuniorAccount` class is not defined properly. Please attempt the question and try again.")
             ja1.withdraw(test[3])
             x.determine_the_grading_method(((test[0], test[1], test[2], test[3]), test[5], ja1.__str__))
             x.determine_the_grading_method(((test[0], test[1], test[2], test[3]), False, ja1.withdraw(test[4]))) 
@@ -74,7 +80,10 @@ class Question2C(FunctionProblem):
 
     def check_testbook(self, fn):
         for test in self._test_cases: 
-            ba = x.get_object_from_lab("lab3", 17, "BankAccount")
+            try:
+                ba = x.get_object_from_lab("lab3", 17, "BankAccount")
+            except TypeError as e:
+                x.justfail("BankAccount", "`BankAccount` class in Question 2A is not defined properly. Please attempt the question and try again.")
             ba1 = ba(*test[4])
             ja1 = fn(test[0], test[1], test[2])
             ja1.transfer(ba1, test[3], test[1])

@@ -75,7 +75,10 @@ class Question2(FunctionProblem):
         # TODO: we need to fix this in the future. Maybe we should capture these error? 
         for test in self._test_cases:
             app, root = x.setup_gui3(tk,fn)
-            # print("blah")
+            # Ensure kg/m is selected before inserting values
+            root.update()
+            app._Q2GUI__unit.set(1)
+            root.update()
             time.sleep(2)
             # x.scan_through_every_layers(root)
 
@@ -84,15 +87,15 @@ class Question2(FunctionProblem):
             self.invoke_element(root)
             time.sleep(2)
             # answer = self.get_text_from_scrolled_text(root)
-            answer = app._output_lbl.cget("text")
+            answer = app._Q2GUI__output_lbl.cget("text")
             # print(f"answer is '{answer}'")
             x.grading_with_string_comparison2((test[2], answer))
             # test lb
-            self.select_lb_rbtn(root, app._unit)
+            self.select_lb_rbtn(root, app._Q2GUI__unit)
             self.insert_into_entry(root, test[0], test[1])
             self.invoke_element(root)
             # answer2 = self.get_text_from_scrolled_text(root)
-            answer2 = app._output_lbl.cget("text")
+            answer2 = app._Q2GUI__output_lbl.cget("text")
             # print(f"answer2 is '{answer2}'")
             x.grading_with_string_comparison2((test[3], answer2))
 
@@ -100,4 +103,4 @@ class Question2(FunctionProblem):
 
     # This is where the actual tests happen
     def check(self, fn):
-        self.check_testbook(fn)       
+        self.check_testbook(fn)

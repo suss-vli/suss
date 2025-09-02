@@ -25,8 +25,8 @@ class Question2A(FunctionProblem):
 class Question2B(FunctionProblem):
     _var="Assessment"
     _test_cases = [
-        (['_max', 'getMaxMarks', 'mark', 'setMaxMarks', 'studentId'], '001', 80, """Student id: 001 Mark: 80""" ),
-        (['_max', 'getMaxMarks', 'mark', 'setMaxMarks', 'studentId'], '002', 101, """Mark can only be between 0 and 100""" )
+        (['_Assessment__max', 'getMaxMarks', 'mark', 'setMaxMarks', 'studentId'], '001', 80, """Student id: 001 Mark: 80""" ),
+        (['_Assessment__max', 'getMaxMarks', 'mark', 'setMaxMarks', 'studentId'], '002', 101, """Mark can only be between 0 and 100""" )
     ]
     
     # def test_cases(self):
@@ -41,11 +41,11 @@ class Question2B(FunctionProblem):
                     x.justpass()
                 else:
                     x.justfail((item, fn.__name__))
-                if item == "_max":
-                    if fn._max == 100:
+                if item == "_Assessment__max":
+                    if fn._Assessment__max == 100:
                         x.justpass()
                     else:
-                        x.justfail(item, f"`_max` is `{fn._max}`. It should be `100`.")
+                        x.justfail(item, f"`__max` is `{fn._Assessment__max}`. It should be `100`.")
                 if item == "studentId":
                     if isinstance(fn.studentId, property):
                         x.justpass()
@@ -254,24 +254,10 @@ Mark to adjust is the same as existing mark!
 T01
 Student id: 001 Mark: 80
 Student id: 002 Mark: 70\n\n""")
-#TODO:test case below is different from instructor solution: instructor solution rewrote the `removeAssessment` and no exception message is displayed - which is also different from question
-# (1, '001', 80, 1, '002', 70, 2, '002', 5, '', """Added!
-# T01
-# Student id: 001 Mark: 80
-
-# Added!
-# T01
-# Student id: 001 Mark: 80
-# Student id: 002 Mark: 70
-
-# Cannot remove if assessment mark is not 0
-# T01
-# Student id: 001 Mark: 80
-# Student id: 002 Mark: 80\n\n""")
     ]
     
     # def test_cases(self):
-    #     return self._test_cases
+    #     return self.__test_cases
 
     def check_testbook(self, fn):
         for a,b,c,d,e,f,g,h,i,j, expected in self._test_cases: 

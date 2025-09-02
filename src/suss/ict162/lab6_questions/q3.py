@@ -98,7 +98,7 @@ Instructor email: johndoe@email.com   Name: John Doe""", 2, 2250.0)
 class Question3C(FunctionProblem):
     _var="TrainingProvider"
     _test_cases = [
-        (["Prog101", "Python Programming", 1000], ["AI304", "AI Fundamentals", 2000], ["John@email.com", "John", 200], [datetime(2024, 12, 10), 2], ["tc@gmail.com", "TC Tan", "ThatCompany", True], (datetime(2025, 6, 10), 2), ["jane.doe@example.com", "Jane Doe", "TechCorp", False], datetime(2024, 10, 9), datetime(2024, 12, 15), [('TC Tan', 1, 'Prog101'), ('Jane Doe', 2, 'AI304')], [('TC Tan', 1, 'Prog101')], 
+        (["Prog101", "Python Programming", 1000], ["AI304", "AI Fundamentals", 2000], ["John@email.com", "John", 200], [datetime(2024, 12, 10), 2], ["tc@gmail.com", "TC Tan", "ThatCompany", True], (datetime(2026, 6, 10), 2), ["jane.doe@example.com", "Jane Doe", "TechCorp", False], datetime(2024, 10, 9), datetime(2024, 12, 15), [('TC Tan', 1, 'Prog101'), ('Jane Doe', 2, 'AI304')], [('TC Tan', 1, 'Prog101')], 
 """Registrations for ABC Training:
 ('TC Tan', 1, 'Prog101') : Registration: Name: TC Tan	 Email: tc@gmail.com Company: ThatCompany SME: Yes+Schedule Id: Prog101_1 	Start Date: 2024-12-10 00:00:00 	Duration: 2 days
 Course Code: Prog101   Course Name: Python Programming
@@ -171,6 +171,7 @@ Instructor email: rachel@abc.com   Name: Rachel
                 x.determine_the_grading_method(((reg, reg1), "Registration cannot be cancelled!", e.__str__()))
             
             # test successfully cancelled
+            print(test[6][1], 2, test[1][0])
             tp.cancelRegistration(test[6][1], 2, test[1][0])
             x.determine_the_grading_method(((reg), test[10], list(tp._TrainingProvider__registrations.keys())))
             
