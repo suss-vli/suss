@@ -17,7 +17,6 @@ class Question1A(FunctionProblem):
             answer = dir(fn)
 
             for item in test[0]:
-                # TODO: if student gives extra attributes, our test does not detect or highlight that.
                 if item in answer: 
                     x.justpass()
                 else:
@@ -35,7 +34,7 @@ class Question1A(FunctionProblem):
                         x.justpass()
                     else:
                         x.justfail(item, "`guardian` should be a property.")
-                
+            
             ba = x.get_object_from_lab("lab3", 4, "BankAccount")
             ba1 = ba(*test[6])
             ja1 = fn(test[1], test[2], test[3])
@@ -45,22 +44,23 @@ class Question1A(FunctionProblem):
             except AssertionError as e:
                 x.determine_the_grading_method(((test[1], test[2], test[3]), test[4], ja1._interestRate + ja1._BONUS))
             x.determine_the_grading_method(((test[1], test[2], test[3]), test[5], ba1._interestRate))
- 
+
             x.determine_the_grading_method(((test[1], test[2], test[3]), test[9], ja1.__str__))
-            
+
             x.determine_the_grading_method(((test[1], test[2], test[3]), False,  ja1.withdraw(51)))
             x.determine_the_grading_method(((test[1], test[2], test[3]), True, ja1.withdraw(50)))
 
             ja1.deposit(50)
 
-            x.determine_the_grading_method(((test[1], test[2], test[3]), test[3], ja1._balance))
-            x.determine_the_grading_method(((test[1], test[2], test[3]), test[3], ba1._balance))
+            # 🔑 changed to handle name-mangled private attributes
+            x.determine_the_grading_method(((test[1], test[2], test[3]), test[3], ja1._BankAccount__balance))
+            x.determine_the_grading_method(((test[1], test[2], test[3]), test[3], ba1._BankAccount__balance))
 
             ba1.accumulateInterest()
             ja1.accumulateInterest()
 
-            x.determine_the_grading_method(((test[1], test[2], test[3]), test[7], ja1._balance))
-            x.determine_the_grading_method(((test[1], test[2], test[3]), test[8], ba1._balance))
+            x.determine_the_grading_method(((test[1], test[2], test[3]), test[7], ja1._BankAccount__balance))
+            x.determine_the_grading_method(((test[1], test[2], test[3]), test[8], ba1._BankAccount__balance))
 
             x.determine_the_grading_method(((test[1], test[2], test[3]), test[10], ja1.__str__()))
 
