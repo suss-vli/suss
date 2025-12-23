@@ -4,7 +4,7 @@ from suss.dev import x
 class Question5A(FunctionProblem):
     _var="Vehicle"
     _test_cases = [
-        (['capacity', 'computeRoadTax', 'vehNo'], 'v1', 2000, 'John', 55, """Owner: John Age: 55 v1 Capacity: 2000 Road Tax: $1800.0""")
+        (['capacity', 'computeRoadTax'], 'v1', 2000, 'John', 55, """Owner: John Age: 55 Veh No: v1 Capacity: 2000 Road Tax: 1800.0""")
     ]
     
     def test_cases(self):
@@ -15,12 +15,7 @@ class Question5A(FunctionProblem):
             answer = dir(fn)
 
             for item in test[0]:
-                if item == "vehNo":
-                    if isinstance(fn.vehNo, property):
-                        x.justpass()
-                    else:
-                        x.justfail(item, "`vehNo` should be a property.")
-                elif item == "computeRoadTax":
+                if item == "computeRoadTax":
                     if fn.computeRoadTax.__isabstractmethod__:
                         x.justpass()
                     else:
@@ -51,8 +46,8 @@ class Question5A(FunctionProblem):
 class Question5B(FunctionProblem):
     _var="PassengerVehicle"
     _test_cases = [
-        ('v1', 2000, 'John', 55, """Owner: John Age: 55 Road Tax: $1800.00 Vehicle No: v1 Engine Capacity: 2000cc"""),
-        ('v2', 2000, 'Jane', 54, """Owner: Jane Age: 54 Road Tax: $2000.00 Vehicle No: v2 Engine Capacity: 2000cc""")
+        ('v1', 2000, 'John', 55, """Owner: John Age: 55 Veh No: v1 Capacity: 2000 Road Tax: 2000"""),
+        ('v2', 2000, 'Jane', 54, """Owner: Jane Age: 54 Veh No: v2 Capacity: 2000 Road Tax: 2000""")
     ]
     
     def test_cases(self):
@@ -69,8 +64,8 @@ class Question5B(FunctionProblem):
 class Question5C(FunctionProblem):
     _var="CommercialVehicle"
     _test_cases = [
-        ('v3', 5000, 'company1', 3, """Company: company1 Max Laden Weight: 3 Road Tax: $5000.00 Vehicle No: v3 Engine Capacity: 5000cc"""),
-        ('v4', 5000, 'company2', 3.1, """Company: company2 Max Laden Weight: 3.1 Road Tax: $7500.00 Vehicle No: v4 Engine Capacity: 5000cc""")
+        ('v3', 5000, 'company1', 3, """Company: company1 Max Laden Weight: 3 Veh No: v3 Capacity: 5000 Road Tax: 5000"""),
+        ('v4', 5000, 'company2', 3.1, """Company: company2 Max Laden Weight: 3.1 Veh No: v4 Capacity: 5000 Road Tax: 7500.0""")
     ]
     
     def test_cases(self):
@@ -87,13 +82,13 @@ class Question5C(FunctionProblem):
 class Question5D(FunctionProblem):
     _var="question5d"
     _test_cases = [
-        (['_age', '_owner', '_vehNo', 'capacity', 'computeRoadTax', 'vehNo'], ['_CommercialVehicle__coyReg', '_CommercialVehicle__maxLadenWeight', 'vehNo', 'capacity', 'computeRoadTax', 'vehNo'], ['GOAT2020', 3000, 'Roger', 41], ['GOAT1990', 3000, 'Boris', 59], ['FXT2021', 3000, 'UEN20303', 3], ['FXR3333', 4500, 'UEN20303', 5], """Owner: Roger Age: 41 Road Tax: $3000.00 Vehicle No: GOAT2020 Engine Capacity: 3000cc
+        (['_age', '_owner', '_vehNo', 'capacity', 'computeRoadTax'], ['_CommercialVehicle__coyReg', '_CommercialVehicle__maxLadenWeight', 'capacity', 'computeRoadTax'], ['GOAT2020', 3000, 'Roger', 41], ['GOAT1990', 3000, 'Boris', 59], ['FXT2021', 3000, 'UEN20303', 3], ['FXR3333', 4500, 'UEN20303', 5], """Owner: Roger Age: 41 Veh No: GOAT2020 Capacity: 3000 Road Tax: 3000
 3000
-Company: UEN20303 Max Laden Weight: 5 Road Tax: $6750.00 Vehicle No: FXR3333 Engine Capacity: 4500cc
+Company: UEN20303 Max Laden Weight: 5 Veh No: FXR3333 Capacity: 4500 Road Tax: 6750.0
 6750.0
-Owner: Boris Age: 59 Road Tax: $2700.00 Vehicle No: GOAT1990 Engine Capacity: 3000cc
+Owner: Boris Age: 59 Veh No: GOAT1990 Capacity: 3000 Road Tax: 2700.0
 2700.0
-Company: UEN20303 Max Laden Weight: 3 Road Tax: $3000.00 Vehicle No: FXT2021 Engine Capacity: 3000cc
+Company: UEN20303 Max Laden Weight: 3 Veh No: FXT2021 Capacity: 3000 Road Tax: 3000
 3000\n""")
     ]
     

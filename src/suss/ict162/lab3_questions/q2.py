@@ -14,14 +14,14 @@ class Question2A(FunctionProblem):
 
     def check_testbook(self, fn):
         for test in self._test_cases:
-            if fn.__class__.__name__ != self._var:
+            if fn.__name__ != self._var:
                 x.justfail("BankAccount", "`BankAccount` class is not defined. Please attempt the question and try again.")
                 
             for item in test[0]:
                 if item in dir(fn):
                     x.justpass()
                 else:
-                    x.justfail((item, fn.__class__.__name__))
+                    x.justfail((item, fn.__name__))
 
             ba1 = fn(test[1], test[2])
 

@@ -4,7 +4,7 @@ from suss.dev import x
 class Question3(FunctionProblem):
     _var="MovieCard"
     _test_cases = [
-        (70, 10, 3, 5, 2, """Ticket price: $70.00, tickets remaining: 9""", """Ticket price: $70.00, tickets remaining: 1""")
+        (70, 10, 3, 5, 2, """Ticket price: $70, tickets remaining: 9""", """Ticket price: $70, tickets remaining: 1""")
     ]
     
     def test_cases(self):
