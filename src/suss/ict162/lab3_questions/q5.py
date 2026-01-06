@@ -4,7 +4,7 @@ from suss.dev import x
 class Question5A(FunctionProblem):
     _var="Vehicle"
     _test_cases = [
-        (['capacity', 'computeRoadTax'], 'v1', 2000, 'John', 55, """Owner: John Age: 55 Veh No: v1 Capacity: 2000 Road Tax: 1800.0""")
+        (['capacity', 'computeRoadTax'], 'v1', 2000, 'John', 55, """Owner: John Age: 55 Veh No: v1 Capacity: 2000 Road Tax: 2000""")
     ]
     
     def test_cases(self):
